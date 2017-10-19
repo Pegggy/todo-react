@@ -1,0 +1,21 @@
+.sidebar{
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #fff;
+  text-align: center;
+}
+.sidebar header{
+  border-bottom: 1px solid #ededed;
+  padding: 10px 30px;
+
+}
+.sidebar > .navbar li{
+  cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ededed;
+}
+.sidebar > .navbar li.selected{
+  background: #ededed;
+}

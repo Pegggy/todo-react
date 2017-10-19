@@ -36,10 +36,14 @@ module.exports = {
           limit: 8192
         }
       }]
+    },
+    {
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader']
     }
     ]
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',

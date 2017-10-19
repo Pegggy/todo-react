@@ -1,0 +1,8 @@
+body {
+  background: #ffe8e8;
+}
+#root{
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
