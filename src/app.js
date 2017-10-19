@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { addTodo,toggleTodo,editTodo,deleteTodo,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
 // import './App.css'
 import AddTodo from './component/addtodo'
+import TodoList from './component/todolist'
 // import TodoItem from './todoItem'
 // import 'normalize.css'
 // import './reset.css'
@@ -115,9 +116,9 @@ class App extends Component {
           <AddTodo 
           onAddClick={(text) => {this.props.addTodo(text)}}/>
         </div>  
-        {/* <TodoList className="todolist">
-          {todos}
-        </TodoList> */}
+         <TodoList className="todolist"  todos={this.props.todos} 
+          onTodoClick={(id) => {this.props.toggleTodo(id)}}
+          onTodoDeleted={id =>{this.props.deleteTodo(id)}}/>
        {/* {this.state.user.id ? null : 
        <UserDialog onSignUp={this.onSign.bind(this)} 
        onSignIn={this.onSign.bind(this)}/>}
