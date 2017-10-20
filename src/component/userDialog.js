@@ -1,35 +1,32 @@
 import React,{Component} from 'react'
-import './userDialog.css'
+import '../css/userDialog.css'
 import {signUp,signIn,resetPasswordByEmail} from './leanCloud'
 import SignUpOrSignIn from './signuporsignin'
-import ForgetPassword from './forgetpassword'
+// import ForgetPassword from './forgetpassword'
 
 export default class UserDialog extends Component{
   constructor(props){
     super(props)
     this.state = {
       selectedTab: 'signUpOrSignIn',
-      formData:{
-        username:'',
-        password:'',
-        email:''
-      },
       info:{
-        username:'',
-        password:'',
-        email:''
+        username: '',
+        password: '',
+        email: ''
       }
     }
   }
 
   changeFormData(key,e){
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
-    stateCopy.formData[key] = e.target.value
+    let stateCopy = JSON.parse(JSON.stringify(this.props.user))
+    console.log(key)
+    console.dir(this.props.user);
+    stateCopy[key] = e.target.value
     this.setState(stateCopy)
   }  
   signUp(e){
     e.preventDefault()
-    let {username,password,email} = this.state.formData
+    let {username,password,email} = this.props.user
     console.log(username,password,email);
     let success = (user) =>{
       this.props.onSignUp.call(null,user)
@@ -37,13 +34,13 @@ export default class UserDialog extends Component{
     let error = (error) =>{
       switch(error.code){
         case 200:
-        alert('用户名为空')
-        break
+          alert('用户名为空')
+          break
         case 202:
-        alert('用户名被占用')
-        break
+          alert('用户名被占用')
+          break
         default:
-        alert(error)
+          alert(error)
       }
     }
     let showInfo = (type,info)=>{
@@ -62,7 +59,9 @@ export default class UserDialog extends Component{
   }
   signIn(e){
     e.preventDefault()
-    let {username,password} = this.state.formData
+    let {username,password} = this.props.user
+    
+    console.dir(this.props.user);
     let success = (user) => {
       this.props.onSignIn.call(null,user)
     }
@@ -80,15 +79,15 @@ export default class UserDialog extends Component{
     }
     signIn(username,password,success,error)
   }
-  resetPassword(e){
-    e.preventDefault()
-    resetPasswordByEmail(this.state.formData.email);
-  }
-  showFogetPassword(){
-    let stateCopy = JSON.parse(JSON.stringify(this.state))
-    stateCopy.selectedTab = 'forgetPassword'
-    this.setState(stateCopy)
-  }
+  // resetPassword(e){
+  //   e.preventDefault()
+  //   resetPasswordByEmail(this.state.formData.email);
+  // }
+  // showFogetPassword(){
+  //   let stateCopy = JSON.parse(JSON.stringify(this.state))
+  //   stateCopy.selectedTab = 'forgetPassword'
+  //   this.setState(stateCopy)
+  // }
   returnToSignIn(){
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.selectedTab = "signUpOrSignIn"
@@ -99,18 +98,25 @@ export default class UserDialog extends Component{
     return(
       <div className="UserDialog-Wrapper">
         <div className="UserDialog">
-          {this.state.selectedTab === 'signUpOrSignIn'? <SignUpOrSignIn 
-          formData={this.state.formData} 
-          info={this.state.info}
+          
+          {/* this.state.selectedTab === 'signUpOrSignIn'?  */}
+          
+          <SignUpOrSignIn formData={this.props.user} 
+          info={this.state.info}   
           onSignUp={this.signUp.bind(this)} 
           onSignIn={this.signIn.bind(this)} 
+          
           onChange={this.changeFormData.bind(this)} 
-          onFogetPassword={this.showFogetPassword.bind(this)}
-          /> : <ForgetPassword 
+          
+          /* onFogetPassword={this.showFogetPassword.bind(this)} */
+          /> 
+
+          {/* : <ForgetPassword 
           onSubmit={this.resetPassword.bind(this)} 
           formData={this.state.formData} 
           onChange={this.changeFormData.bind(this)}
-          onReturnToSignIn={this.returnToSignIn.bind(this)}/>}
+          onReturnToSignIn={this.returnToSignIn.bind(this)}/>
+          } */}
         </div>
       </div>
     )

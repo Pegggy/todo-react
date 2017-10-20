@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addTodo,toggleTodo,editTodo,deleteTodo,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
+import {signup,signin,signout,forget_password} from './redux/actions/user'
 // import './App.css'
 import AddTodo from './component/addtodo'
 import TodoList from './component/todolist'
-// import TodoItem from './todoItem'
 // import 'normalize.css'
 // import './reset.css'
-// import UserDialog from './userDialog'
+import UserDialog from './component/userDialog'
 // import {getCurrentUser,signOut,TodoModel} from './leanCloud'
 // import SideBar from './sidebar'
 
@@ -119,10 +119,11 @@ class App extends Component {
          <TodoList className="todolist"  todos={this.props.todos} 
           onTodoClick={(id) => {this.props.toggleTodo(id)}}
           onTodoDeleted={(id) =>{this.props.deleteTodo(id)}}/>
-       {/* {this.state.user.id ? null : 
-       <UserDialog onSignUp={this.onSign.bind(this)} 
-       onSignIn={this.onSign.bind(this)}/>}
-       <SideBar /> */}
+       {/* { this.state.user.id ? null :  */}
+       <UserDialog onSignUp={(userinfo)=>this.props.signup(userinfo)} 
+       onSignIn={(user)=>this.props.signin(user)}
+       user={this.props.user}/>}
+       {/* <SideBar /> } */}
       </div>
       
     )
@@ -142,7 +143,8 @@ function getVisibileTodos(todos,filter){
 const mapStateToProps = (state) =>{
   return{
     todos: getVisibileTodos(state.todoApp.todos,state.todoApp.visibilityFilters),
-    visibilityFilters: state.todoApp.visibilityFilters
+    visibilityFilters: state.todoApp.visibilityFilters,
+    user: state.user
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -162,6 +164,16 @@ const mapDispatchToProps = (dispatch) => {
     },
     setVisibilityFilter: (filter) =>{
       dispatch(setVisibilityFilter(filter))
+    },
+    signup: (userinfo) =>{
+      console.log(userinfo);
+      let {username,password,email} = userinfo
+      dispatch(signup(username,password,email))
+    },
+    signin: (user) =>{
+      let {username,password} = user
+      console.log(user)
+      dispatch(signin(username,password))
     }
   }
 }

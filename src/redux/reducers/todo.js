@@ -42,7 +42,7 @@ function todos(state = [], actions){
       })
     case DELETE_TODO:
       return state.filter(todos =>
-        todos.id !== actions.id}
+        todos.id !== actions.id
     )
     case EDIT_TODO:
     return state.map(todos =>

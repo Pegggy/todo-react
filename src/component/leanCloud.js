@@ -9,11 +9,11 @@ AV.init({
 
 export default AV
 export const TodoModel = {
-  create({title,status,deleted},successFn,errorFn){
+  create({text,completed,deleted},successFn,errorFn){
     let Todo = AV.Object.extend('Todo')
     let todo = new Todo()
-    todo.set('title',title)
-    todo.set('status',status)
+    todo.set('text',text)
+    todo.set('completed',completed)
     todo.set('deleted',deleted)
     let acl = new AV.ACL()
     acl.setPublicReadAccess(false)
@@ -41,12 +41,12 @@ export const TodoModel = {
   destroy(todoId,successFn,errorFn){
     TodoModel.update({id:todoId,deleted: true},successFn,errorFn)
   },
-  update({id,title,status,deleted},successFn,errorFn){
+  update({id,text,completed,deleted},successFn,errorFn){
     // 第一个参数是 className，第二个参数是 objectId
     var todo = AV.Object.createWithoutData('Todo', id)
     // 修改属性
-    title !== undefined && todo.set('title', title)
-    status !== undefined && todo.set('status', status)
+    text !== undefined && todo.set('text', text)
+    completed !== undefined && todo.set('completed', completed)
     deleted !== undefined && todo.set('deleted', deleted)
     // 保存到云端
     todo.save().then(function(response){
@@ -65,6 +65,7 @@ export function signUp(username,password,email,successFn,errorFn){
   user.setEmail(email)
   user.signUp().then(function(loginedUser) {
     let user = getUserFromAVUser(loginedUser)
+    console.log(user);
     successFn.call(null,user)
   }, function (error) {
     errorFn.call(null,error)

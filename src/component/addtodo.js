@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import './todoInput.css';
+import '../css/todoInput.css';
 
 export default class AddTodo extends Component{
   constructor(props){
