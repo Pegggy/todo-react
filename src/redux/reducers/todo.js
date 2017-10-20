@@ -41,8 +41,9 @@ function todos(state = [], actions){
         return item
       })
     case DELETE_TODO:
-      return state.filter(todo =>
-        todo.id !== action.id
+      return state.filter(todos =>
+        {console.log(todos.id);
+        todos.id !== actions.id}
     )
     case EDIT_TODO:
     return state.map(todo =>

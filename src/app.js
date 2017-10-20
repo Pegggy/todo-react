@@ -118,7 +118,7 @@ class App extends Component {
         </div>  
          <TodoList className="todolist"  todos={this.props.todos} 
           onTodoClick={(id) => {this.props.toggleTodo(id)}}
-          onTodoDeleted={id =>{this.props.deleteTodo(id)}}/>
+          onTodoDeleted={(id) =>{this.props.deleteTodo(id)}}/>
        {/* {this.state.user.id ? null : 
        <UserDialog onSignUp={this.onSign.bind(this)} 
        onSignIn={this.onSign.bind(this)}/>}
@@ -154,10 +154,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(toggleTodo(id))
     },
     editTodo: (id,text)=>{
-      dispatch:(editTodo(id,text))
+      dispatch(editTodo(id,text))
     },
     deleteTodo: (id)=>{
-      dispatch:(deleteTodo(id))
+      console.log(id);
+      dispatch(deleteTodo(id));
     },
     setVisibilityFilter: (filter) =>{
       dispatch(setVisibilityFilter(filter))
