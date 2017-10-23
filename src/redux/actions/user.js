@@ -3,15 +3,15 @@ export const SIGNIN = 'SIGNIN'
 export const SIGNOUT = 'SIGNOUT'
 export const FORGET_PASSWORD = 'FORGET_PASSWORD'
 
-export function signup(username,password,email){
-  return{ type: SIGNUP,username,password,email}
+export function signup(username,password,email,data){
+  return{ type: SIGNUP,username,password,email,data}
 }
-export function signin(username,password){
-  return{ type: SIGNIN,username,password}
+export function signin(username,password,data){
+  return{ type: SIGNIN,username,password,data}
 }
-export function signout(user){
-  return{ type: SIGNOUT,user}
+export function signout(user,data){
+  return{ type: SIGNOUT,user,data}
 }
-export function forget_password(email){
-  return{ type: FORGET_PASSWORD,email}
+export function forget_password(email,data){
+  return{ type: FORGET_PASSWORD,email,data}
 }

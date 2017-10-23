@@ -9,26 +9,26 @@ export default function user(state,action){
   switch(action.type){
     case SIGNUP:
       return{
-        ...state,
         username: action.username,
         password: action.password,
-        email: action.email
+        email: action.email,
+        data: action.data
       }
     case SIGNIN:
       return{
-        ...state,
         username: action.username,
-        password: action.password
+        password: action.password,
+        data: action.data
       }
     case SIGNOUT:
       return{
-        ...state,
-        user: action.user
+        user: action.user,
+        data: action.data
       }
     case FORGET_PASSWORD:
       return{
-        ...state,
-        email: action.email
+        email: action.email,
+        data: action.data
       }
     default:
       return state

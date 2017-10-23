@@ -18,18 +18,19 @@ export default class UserDialog extends Component{
   }
 
   changeFormData(key,e){
-    let stateCopy = JSON.parse(JSON.stringify(this.props.user))
-    console.log(key)
-    console.dir(this.props.user);
-    stateCopy[key] = e.target.value
-    this.setState(stateCopy)
+    // let stateCopy = JSON.parse(JSON.stringify(this.props.user))
+    // console.log(key)
+    // console.dir(this.props.user);
+    this.props.userInfo[key] = e.target.value
+    this.setState(this.props.userInfo)
+    console.dir(this.props.userInfo)
   }  
   signUp(e){
     e.preventDefault()
-    let {username,password,email} = this.props.user
+    let {username,password,email} = this.props.userInfo
     console.log(username,password,email);
-    let success = (user) =>{
-      this.props.onSignUp.call(null,user)
+    let success = (data) =>{
+      this.props.onSignUp.call(null,data)
     }
     let error = (error) =>{
       switch(error.code){
@@ -59,11 +60,10 @@ export default class UserDialog extends Component{
   }
   signIn(e){
     e.preventDefault()
-    let {username,password} = this.props.user
-    
-    console.dir(this.props.user);
-    let success = (user) => {
-      this.props.onSignIn.call(null,user)
+    let {username,password} = this.props.userInfo
+    console.dir(this.props.userInfo);
+    let success = (data) => {
+      this.props.onSignIn.call(null,username,password,data)
     }
     let error = (error) =>{
       switch(error.code){
@@ -79,15 +79,15 @@ export default class UserDialog extends Component{
     }
     signIn(username,password,success,error)
   }
-  // resetPassword(e){
-  //   e.preventDefault()
-  //   resetPasswordByEmail(this.state.formData.email);
-  // }
-  // showFogetPassword(){
-  //   let stateCopy = JSON.parse(JSON.stringify(this.state))
-  //   stateCopy.selectedTab = 'forgetPassword'
-  //   this.setState(stateCopy)
-  // }
+  resetPassword(e){
+    e.preventDefault()
+    resetPasswordByEmail(this.state.userInfo.email);
+  }
+  showFogetPassword(){
+    let stateCopy = JSON.parse(JSON.stringify(this.state))
+    stateCopy.selectedTab = 'forgetPassword'
+    this.setState(stateCopy)
+  }
   returnToSignIn(){
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.selectedTab = "signUpOrSignIn"
@@ -101,22 +101,22 @@ export default class UserDialog extends Component{
           
           {/* this.state.selectedTab === 'signUpOrSignIn'?  */}
           
-          <SignUpOrSignIn formData={this.props.user} 
+          <SignUpOrSignIn formData={this.props.userInfo} 
           info={this.state.info}   
           onSignUp={this.signUp.bind(this)} 
           onSignIn={this.signIn.bind(this)} 
           
           onChange={this.changeFormData.bind(this)} 
           
-          /* onFogetPassword={this.showFogetPassword.bind(this)} */
+          onFogetPassword={this.showFogetPassword.bind(this)}
           /> 
-
-          {/* : <ForgetPassword 
+{/* 
+           : <ForgetPassword 
           onSubmit={this.resetPassword.bind(this)} 
-          formData={this.state.formData} 
+          formData={this.props.userInfo} 
           onChange={this.changeFormData.bind(this)}
           onReturnToSignIn={this.returnToSignIn.bind(this)}/>
-          } */}
+          }  */}
         </div>
       </div>
     )

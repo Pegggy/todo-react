@@ -1,9 +1,9 @@
 import todoApp from './reducers/todo'
-import user from './reducers/user'
+import userInfo from './reducers/user'
 import { combineReducers } from 'redux'
 
 const rootReducers = combineReducers({
   todoApp: todoApp,
-  user: user
+  userInfo: userInfo
 })
 export default rootReducers

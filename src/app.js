@@ -8,7 +8,7 @@ import TodoList from './component/todolist'
 // import 'normalize.css'
 // import './reset.css'
 import UserDialog from './component/userDialog'
-// import {getCurrentUser,signOut,TodoModel} from './leanCloud'
+import {getCurrentUser,signOut,TodoModel} from './component/leanCloud'
 // import SideBar from './sidebar'
 
 class App extends Component {
@@ -74,27 +74,24 @@ class App extends Component {
     //     console.log(error)
     //   })
     // }
-    // onSign(user){
-    //   let stateCopy = JSON.parse(JSON.stringify(this.state))
-    //   stateCopy.user = user
-    //   TodoModel.getByUser(user,(todos)=>{
-    //     stateCopy.todoList = todos
-    //     this.setState(stateCopy)
-    //   },(error)=>{
-    //     console.log(error)
-    //   })
-    // }
+    onSign(user){
+      TodoModel.getByUser(this.props.userInfo.data,(todos)=>{
+        this.props.todos = todos
+        this.setState(this.props.todos)
+      },(error)=>{
+        console.log(error)
+      })
+    }
 
-    // signOut(){
-    //   signOut()
-    //   let stateCopy = JSON.parse(JSON.stringify(this.state))
-    //   stateCopy.user = {}
-    //   stateCopy.todoList = []
-    //   this.setState(stateCopy)
-    // }
+    signOut(){
+      signOut()
+      this.props.userInfo = {}
+      stateCopy.todoList = []
+    }
 
   render(){
-    const { dispatch, visibleTodos, visibilityFilter } = this.props
+    const { dispatch, visibleTodos, visibilityFilter,userInfo } = this.props
+    console.dir(this.props)
     // let todos = this.state.todoList
     //     .filter(item => item.deleted === false)
     //       .map((item,index) =>{
@@ -108,10 +105,10 @@ class App extends Component {
     //       })
     return (
       <div className="App">
-        {/* <h1>{this.state.user.username||'我'}的待办
-          {this.state.user.id ? <button className="signOut" 
+         <h1>{this.props.userInfo.username||'我'}的待办
+          {this.props.userInfo.data.id ? <button className="signOut" 
           onClick={this.signOut.bind(this)}>登出</button> : null}
-        </h1> */}
+        </h1> 
         <div className="inputWrapper">
           <AddTodo 
           onAddClick={(text) => {this.props.addTodo(text)}}/>
@@ -119,10 +116,10 @@ class App extends Component {
          <TodoList className="todolist"  todos={this.props.todos} 
           onTodoClick={(id) => {this.props.toggleTodo(id)}}
           onTodoDeleted={(id) =>{this.props.deleteTodo(id)}}/>
-       {/* { this.state.user.id ? null :  */}
-       <UserDialog onSignUp={(userinfo)=>this.props.signup(userinfo)} 
-       onSignIn={(user)=>this.props.signin(user)}
-       user={this.props.user}/>}
+       { this.props.userInfo.data.id ? null :  
+       <UserDialog onSignUp={(user)=>this.props.signup(user)} 
+       onSignIn={(username,password,user)=>this.props.signin(username,password,user)}
+       userInfo={this.props.userInfo}/>}
        {/* <SideBar /> } */}
       </div>
       
@@ -144,7 +141,7 @@ const mapStateToProps = (state) =>{
   return{
     todos: getVisibileTodos(state.todoApp.todos,state.todoApp.visibilityFilters),
     visibilityFilters: state.todoApp.visibilityFilters,
-    user: state.user
+    userInfo: state.userInfo
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -165,17 +162,23 @@ const mapDispatchToProps = (dispatch) => {
     setVisibilityFilter: (filter) =>{
       dispatch(setVisibilityFilter(filter))
     },
-    signup: (userinfo) =>{
-      console.log(userinfo);
-      let {username,password,email} = userinfo
-      dispatch(signup(username,password,email))
+    signup: (data) =>{
+      console.log(data);
+      dispatch(signup(data))
     },
-    signin: (user) =>{
-      let {username,password} = user
-      console.log(user)
-      dispatch(signin(username,password))
+    signin: (username,password,user) =>{
+      // let {username,password} = user
+      console.dir(username,password,user)
+      dispatch(signin(username,password,user))
+      TodoModel.getByUser(user,(todos)=>{
+        this.props.todos = todos
+        this.setState(this.props.todos)
+      },(error)=>{
+        console.log(error)
+      })
     }
   }
 }
+
 export default connect(mapStateToProps,mapDispatchToProps)(App)
 
