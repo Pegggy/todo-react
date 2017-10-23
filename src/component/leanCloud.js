@@ -31,8 +31,10 @@ export const TodoModel = {
     let query = new AV.Query('Todo');
     query.find().then(function (todos) {
       let arr = todos.map(function(todo) {
-        return {id: todo.id,...todo.attributes}
+        if(!todo.attributes.deleted) return  {id:todo.id,...todo.attributes}
       });
+      arr = arr.filter(todo => todo !== undefined)
+      console.log(arr)
       successFn.call(null,arr)
     }, function (error) {
       errorFn && errorFn.call(null,error)

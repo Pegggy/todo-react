@@ -39,6 +39,12 @@ function todos(state = [], actions){
         return item
       })
     case DELETE_TODO:
+      state = state.map((item,id)=>{
+        if( actions.id === item.id){
+          return Object.assign({},item,{ deleted: true })
+        }
+        return item
+      })
       return state.filter(todos =>
         todos.id !== actions.id
     )

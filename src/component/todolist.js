@@ -9,7 +9,7 @@ export default class TodoList extends Component {
           <TodoItem {...todo}
                 key={index}
                 onClick={() => this.props.onTodoClick(todo)} 
-                onDeleted={()=>{this.props.onTodoDeleted(todo.id)}}/>
+                onDeleted={()=>{this.props.onTodoDeleted(todo)}}/>
         )}
       </ul>
     )

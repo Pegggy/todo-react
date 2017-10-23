@@ -82,11 +82,11 @@ class App extends Component {
     //   })
     // }
 
-    // signOut(){
-    //   signOut()
-    //   this.props.userInfo = {}
-    //   stateCopy.todoList = []
-    // }
+    signOut(){
+      signOut()
+      this.props.userInfo = {}
+      stateCopy.todoList = []
+    }
 
   render(){
     const { dispatch, visibleTodos, visibilityFilter,userInfo } = this.props
@@ -113,7 +113,7 @@ class App extends Component {
         </div>  
          <TodoList className="todolist"  todos={this.props.todoList} 
           onTodoClick={(todo) => {this.props.toggleTodo(todo)}}
-          onTodoDeleted={(id) =>{this.props.deleteTodo(id)}}/>
+          onTodoDeleted={(todo) =>{this.props.deleteTodo(todo)}}/>
        { this.props.userInfo.data.id ? null :  
        <UserDialog onSignUp={(user)=>this.props.signup(user)} 
        onSignIn={(username,password,user)=>this.props.signin(username,password,user)}
@@ -172,9 +172,15 @@ const mapDispatchToProps = (dispatch) => {
     editTodo: (id,text)=>{
       dispatch(editTodo(id,text))
     },
-    deleteTodo: (id)=>{
-      console.log(id);
-      dispatch(deleteTodo(id));
+    deleteTodo: (todo)=>{
+      TodoModel.destroy(todo.id,()=>{
+        dispatch(deleteTodo(todo.id));
+        this.setState(this.state)
+      },(error)=>{
+        console.log(error)
+      })
+      // console.log(id);
+      // dispatch(deleteTodo(todo.id));
     },
     setVisibilityFilter: (filter) =>{
       dispatch(setVisibilityFilter(filter))
