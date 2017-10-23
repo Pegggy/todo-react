@@ -8,27 +8,15 @@ const { SHOW_ALL } = VisibilityFilters;
 //     {
 //       id: 1,
 //       text: 'do something',
-//       completed: false
-//     },
-//     {
-//       id: 2,
-//       text: 'working',
-//       completed: false
+//       completed: false,
+//       delete: false
 //     }
 //   ]
 // }
 
-// let id = 0
-// function idmaker(){
-//   return id+=1 
-// }
 function todos(state = [], actions){
   switch( actions.type){
     case INIT_TODO:
-    console.log([
-        ...state,
-        ...actions.todos
-      ])
       return [
         ...state,
         ...actions.todos
@@ -45,7 +33,7 @@ function todos(state = [], actions){
       ]
     case TOGGLE_TODO:
       return state.map((item,id)=>{
-        if( actions.id === id){
+        if( actions.id === item.id){
           return Object.assign({},item,{ completed: !item.completed})
         }
         return item

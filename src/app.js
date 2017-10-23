@@ -38,22 +38,22 @@ class App extends Component {
     //     todoList: this.state.todoList
     //   })
     // }
-    addTodo(e){
-      let todoitem = {
-        text: e.target.value,
-        completed: false,
-        deleted: false
-      }
-      TodoModel.create(todoitem,(id)=>{
-        todoitem.id = id
-        this.props.todos.push(todoitem)
-        this.setState(
-          this.props.todoList
-        ,(error)=>{
-          console.log(error)
-        })
-      })
-    }
+    // addTodo(e){
+    //   let todoitem = {
+    //     text: e.target.value,
+    //     completed: false,
+    //     deleted: false
+    //   }
+    //   TodoModel.create(todoitem,(id)=>{
+    //     todoitem.id = id
+    //     this.props.todos.push(todoitem)
+    //     this.setState(
+    //       this.props.todoList
+    //     ,(error)=>{
+    //       console.log(error)
+    //     })
+    //   })
+    // }
 
     // toggle(e,todo){
     //   let oldStatus = todo.status
@@ -73,20 +73,20 @@ class App extends Component {
     //     console.log(error)
     //   })
     // }
-    onSign(user){
-      TodoModel.getByUser(this.props.userInfo.data,(todos)=>{
-        this.props.todos = todos
-        this.setState(this.props.todos)
-      },(error)=>{
-        console.log(error)
-      })
-    }
+    // onSign(user){
+    //   TodoModel.getByUser(this.props.userInfo.data,(todos)=>{
+    //     this.props.todos = todos
+    //     this.setState(this.props.todos)
+    //   },(error)=>{
+    //     console.log(error)
+    //   })
+    // }
 
-    signOut(){
-      signOut()
-      this.props.userInfo = {}
-      stateCopy.todoList = []
-    }
+    // signOut(){
+    //   signOut()
+    //   this.props.userInfo = {}
+    //   stateCopy.todoList = []
+    // }
 
   render(){
     const { dispatch, visibleTodos, visibilityFilter,userInfo } = this.props
@@ -112,7 +112,7 @@ class App extends Component {
           onAddClick={(text) => {this.props.addTodo(text)}}/>
         </div>  
          <TodoList className="todolist"  todos={this.props.todoList} 
-          onTodoClick={(id) => {this.props.toggleTodo(id)}}
+          onTodoClick={(todo) => {this.props.toggleTodo(todo)}}
           onTodoDeleted={(id) =>{this.props.deleteTodo(id)}}/>
        { this.props.userInfo.data.id ? null :  
        <UserDialog onSignUp={(user)=>this.props.signup(user)} 
@@ -146,7 +146,6 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) => {
   return {
     addTodo: (text) =>{
-      // dispatch(addTodo(text));
       let todoitem = {
         text: text,
         completed: false,
@@ -162,8 +161,13 @@ const mapDispatchToProps = (dispatch) => {
         })
       })
     },
-    toggleTodo: (id) =>{
-      dispatch(toggleTodo(id))
+    toggleTodo: (todo) =>{ 
+      TodoModel.update({id: todo.id,completed: !todo.completed},()=>{
+        dispatch(toggleTodo(todo.id))
+        this.setState(this.props.todoList)
+      },(error)=>{
+        this.setState(this.props.todoList)
+      })
     },
     editTodo: (id,text)=>{
       dispatch(editTodo(id,text))
@@ -180,8 +184,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(signup(data))
     },
     signin: (username,password,user) =>{
-      // let {username,password} = user
-      console.dir(username,password,user)
       dispatch(signin(username,password,user))
       TodoModel.getByUser(user,(todos)=>{
         dispatch(initTodo(todos))
