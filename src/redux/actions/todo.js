@@ -1,3 +1,4 @@
+export const INIT_TODO = 'INIT_TODO'
 export const ADD_TODO = 'ADD_TODO'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
@@ -9,9 +10,11 @@ export const VisibilityFilters = {
   SHOW_COMPLETED: 'SHOW_COMPLETED',
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
-
-export function addTodo(text){
-  return{ type: ADD_TODO,text}
+export function initTodo(todos){
+  return {type: INIT_TODO,todos}
+}
+export function addTodo(id,text){
+  return{ type: ADD_TODO,id,text}
 }
 
 export function toggleTodo(id){

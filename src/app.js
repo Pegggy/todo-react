@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addTodo,toggleTodo,editTodo,deleteTodo,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
+import { initTodo,addTodo,toggleTodo,editTodo,deleteTodo,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
 import {signup,signin,signout,forget_password} from './redux/actions/user'
 // import './App.css'
 import AddTodo from './component/addtodo'
@@ -38,23 +38,22 @@ class App extends Component {
     //     todoList: this.state.todoList
     //   })
     // }
-    // addTodo(e){
-    //   let todoitem = {
-    //     title: e.target.value,
-    //     status: '',
-    //     deleted: false
-    //   }
-    //   TodoModel.create(todoitem,(id)=>{
-    //     todoitem.id = id
-    //     this.state.todoList.push(todoitem)
-    //     this.setState({
-    //       newTodo:'',
-    //       todoList: this.state.todoList
-    //     },(error)=>{
-    //       console.log(error)
-    //     })
-    //   })
-    // }
+    addTodo(e){
+      let todoitem = {
+        text: e.target.value,
+        completed: false,
+        deleted: false
+      }
+      TodoModel.create(todoitem,(id)=>{
+        todoitem.id = id
+        this.props.todos.push(todoitem)
+        this.setState(
+          this.props.todoList
+        ,(error)=>{
+          console.log(error)
+        })
+      })
+    }
 
     // toggle(e,todo){
     //   let oldStatus = todo.status
@@ -91,7 +90,6 @@ class App extends Component {
 
   render(){
     const { dispatch, visibleTodos, visibilityFilter,userInfo } = this.props
-    console.dir(this.props)
     // let todos = this.state.todoList
     //     .filter(item => item.deleted === false)
     //       .map((item,index) =>{
@@ -113,7 +111,7 @@ class App extends Component {
           <AddTodo 
           onAddClick={(text) => {this.props.addTodo(text)}}/>
         </div>  
-         <TodoList className="todolist"  todos={this.props.todos} 
+         <TodoList className="todolist"  todos={this.props.todoList} 
           onTodoClick={(id) => {this.props.toggleTodo(id)}}
           onTodoDeleted={(id) =>{this.props.deleteTodo(id)}}/>
        { this.props.userInfo.data.id ? null :  
@@ -139,7 +137,8 @@ function getVisibileTodos(todos,filter){
 }
 const mapStateToProps = (state) =>{
   return{
-    todos: getVisibileTodos(state.todoApp.todos,state.todoApp.visibilityFilters),
+    todos: state.todoApp.todos,
+    todoList: getVisibileTodos(state.todoApp.todos,state.todoApp.visibilityFilters),
     visibilityFilters: state.todoApp.visibilityFilters,
     userInfo: state.userInfo
   }
@@ -147,7 +146,21 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) => {
   return {
     addTodo: (text) =>{
-      dispatch(addTodo(text))
+      // dispatch(addTodo(text));
+      let todoitem = {
+        text: text,
+        completed: false,
+        deleted: false
+      }
+      TodoModel.create(todoitem,(id)=>{
+        todoitem.id = id
+        dispatch(addTodo(todoitem.id,todoitem.text));
+        this.setState(
+          this.props.todoList
+        ,(error)=>{
+          console.log(error)
+        })
+      })
     },
     toggleTodo: (id) =>{
       dispatch(toggleTodo(id))
@@ -171,8 +184,8 @@ const mapDispatchToProps = (dispatch) => {
       console.dir(username,password,user)
       dispatch(signin(username,password,user))
       TodoModel.getByUser(user,(todos)=>{
-        this.props.todos = todos
-        this.setState(this.props.todos)
+        dispatch(initTodo(todos))
+        this.setState(this.props.todoList)
       },(error)=>{
         console.log(error)
       })

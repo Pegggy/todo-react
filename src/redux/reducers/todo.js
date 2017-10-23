@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO,DELETE_TODO,EDIT_TODO, SET_VISIBILITY_FILTER,VisibilityFilters } from '../actions/todo';
+import { INIT_TODO,ADD_TODO, TOGGLE_TODO,DELETE_TODO,EDIT_TODO, SET_VISIBILITY_FILTER,VisibilityFilters } from '../actions/todo';
 import { combineReducers } from 'redux';
 const { SHOW_ALL } = VisibilityFilters;
 
@@ -18,19 +18,29 @@ const { SHOW_ALL } = VisibilityFilters;
 //   ]
 // }
 
-let id = 0
-function idmaker(){
-  return id+=1 
-}
+// let id = 0
+// function idmaker(){
+//   return id+=1 
+// }
 function todos(state = [], actions){
   switch( actions.type){
+    case INIT_TODO:
+    console.log([
+        ...state,
+        ...actions.todos
+      ])
+      return [
+        ...state,
+        ...actions.todos
+      ]
     case ADD_TODO:
       return [
         ...state,
         {
+          id: actions.id,
           text: actions.text,
           completed: false,
-          id: idmaker()
+          deleted: false,
         }
       ]
     case TOGGLE_TODO:
