@@ -2,20 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { initTodo,addTodo,toggleTodo,editTodo,deleteTodo,clearAll,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
 import {signup,signin,signout,forget_password} from './redux/actions/user'
-// import './App.css'
 import AddTodo from './component/addtodo'
 import TodoList from './component/todolist'
-// import 'normalize.css'
-// import './reset.css'
 import UserDialog from './component/userDialog'
-import {getCurrentUser,signOut,TodoModel} from './component/leanCloud'
+import {getCurrentUser,signOut,TodoModel,resetPasswordByEmail} from './component/leanCloud'
+import 'normalize.css'
+import './css/reset.css'
+import './css/App.css'
 // import SideBar from './sidebar'
 
 class App extends Component {
-  // constructor(props){
-  //   super(props)
-  // }
-    // super(props)
+
     //   this.state = {
     //     newTodo: '',
     //     todoList:[],
@@ -65,14 +62,6 @@ class App extends Component {
     //     this.setState(this.state)
     //   })
     // }
-    // delete(e,todo){
-    //   TodoModel.destroy(todo.id,()=>{
-    //     todo.deleted = true
-    //     this.setState(this.state)
-    //   },(error)=>{
-    //     console.log(error)
-    //   })
-    // }
     // onSign(user){
     //   TodoModel.getByUser(this.props.userInfo.data,(todos)=>{
     //     this.props.todos = todos
@@ -82,25 +71,8 @@ class App extends Component {
     //   })
     // }
 
-    // signOut(){
-    //   signOut()
-    //   this.props.userInfo = {}
-    //   stateCopy.todoList = []
-    // }
-
   render(){
     const { dispatch, visibleTodos, visibilityFilter,userInfo } = this.props
-    // let todos = this.state.todoList
-    //     .filter(item => item.deleted === false)
-    //       .map((item,index) =>{
-    //         return(
-    //         <li key={index}>
-    //           <TodoItem todo={item} 
-    //           onToggle={this.toggle.bind(this)} 
-    //           onDelete={this.delete.bind(this)}/>  
-    //         </li>
-    //         )
-    //       })
     return (
       <div className="App">
          <h1>{this.props.userInfo.username||'我'}的待办
@@ -117,7 +89,8 @@ class App extends Component {
        { this.props.userInfo.data.id ? null :  
        <UserDialog onSignUp={(username,password,email,user)=>this.props.signup(username,password,email,user)} 
        onSignIn={(username,password,user)=>this.props.signin(username,password,user)}
-       userInfo={this.props.userInfo}/>}
+       userInfo={this.props.userInfo}
+       onResetPassword={(email)=>{this.props.forget_password(email)}}/>}
        {/* <SideBar /> } */}
       </div>
       
@@ -200,9 +173,14 @@ const mapDispatchToProps = (dispatch) => {
       })
     },
     signout: () =>{
-      signOut()
       dispatch(signout())
+      signOut()
       dispatch(clearAll())
+    },
+    forget_password: (email)=>{
+      dispatch(forget_password(email))
+      resetPasswordByEmail(email)
+      dispatch(signout())
     }
   }
 }

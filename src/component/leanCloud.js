@@ -66,7 +66,6 @@ export function signUp(username,password,email,successFn,errorFn){
   user.setEmail(email)
   user.signUp().then(function(loginedUser) {
     let user = getUserFromAVUser(loginedUser)
-    console.log(user);
     successFn.call(null,user)
   }, function (error) {
     errorFn.call(null,error)

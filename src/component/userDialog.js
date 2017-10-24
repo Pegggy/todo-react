@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import '../css/userDialog.css'
 import {signUp,signIn,resetPasswordByEmail} from './leanCloud'
 import SignUpOrSignIn from './signuporsignin'
-// import ForgetPassword from './forgetpassword'
+import ForgetPassword from './forgetpassword'
 
 export default class UserDialog extends Component{
   constructor(props){
@@ -51,7 +51,6 @@ export default class UserDialog extends Component{
      if(checkUserName(username,hideInfo,showInfo) && checkPassword(password,hideInfo,showInfo) && checkEmail(email,hideInfo,showInfo)){
        signUp(username,password,email,success,error)
      }  
-
   }
   signIn(e){
     e.preventDefault()
@@ -75,8 +74,8 @@ export default class UserDialog extends Component{
   }
   resetPassword(e){
     e.preventDefault()
-
-    resetPasswordByEmail(this.state.userInfo.email);
+    this.props.onResetPassword.call(null,this.props.userInfo.email)
+    this.returnToSignIn();
   }
   showFogetPassword(){
     let stateCopy = JSON.parse(JSON.stringify(this.state))
@@ -86,32 +85,26 @@ export default class UserDialog extends Component{
   returnToSignIn(){
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.selectedTab = "signUpOrSignIn"
-    stateCopy.formData.email = ''
+    // stateCopy.formData.email = ''
     this.setState(stateCopy)
   }
   render(){
     return(
       <div className="UserDialog-Wrapper">
-        <div className="UserDialog">
-          
-          {/* this.state.selectedTab === 'signUpOrSignIn'?  */}
-          
+        <div className="UserDialog">{
+           this.state.selectedTab === 'signUpOrSignIn'?  
           <SignUpOrSignIn formData={this.props.userInfo} 
           info={this.state.info}   
           onSignUp={this.signUp.bind(this)} 
           onSignIn={this.signIn.bind(this)} 
-          
           onChange={this.changeFormData.bind(this)} 
-          
           onFogetPassword={this.showFogetPassword.bind(this)}
-          /> 
-{/* 
-           : <ForgetPassword 
+          /> : <ForgetPassword 
           onSubmit={this.resetPassword.bind(this)} 
           formData={this.props.userInfo} 
           onChange={this.changeFormData.bind(this)}
           onReturnToSignIn={this.returnToSignIn.bind(this)}/>
-          }  */}
+          }
         </div>
       </div>
     )

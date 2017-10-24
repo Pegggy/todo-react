@@ -12,6 +12,6 @@ export function signin(username,password,data){
 export function signout(){
   return{ type: SIGNOUT}
 }
-export function forget_password(email,data){
-  return{ type: FORGET_PASSWORD,email,data}
+export function forget_password(email){
+  return{ type: FORGET_PASSWORD,email}
 }

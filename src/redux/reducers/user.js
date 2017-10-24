@@ -18,14 +18,15 @@ export default function user(state = initState,action){
       return{
         username: action.username,
         password: action.password,
+        email: '',
         data: action.data
       }
     case SIGNOUT:
-      return initState
+      state = initState
+      return state
     case FORGET_PASSWORD:
       return{
         email: action.email,
-        data: action.data
       }
     default:
       return state
