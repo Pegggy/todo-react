@@ -1,11 +1,11 @@
 import {SIGNUP,SIGNIN,SIGNOUT,FORGET_PASSWORD} from '../actions/user'
 const initState = {
-  data: []
+  data: [],
+  username: '',
+  password: '',
+  email: ''
 }
-export default function user(state,action){
-  if(!state){
-    state = initState
-  }
+export default function user(state = initState,action){
   switch(action.type){
     case SIGNUP:
       return{
@@ -21,10 +21,7 @@ export default function user(state,action){
         data: action.data
       }
     case SIGNOUT:
-      return{
-        user: action.user,
-        data: action.data
-      }
+      return initState
     case FORGET_PASSWORD:
       return{
         email: action.email,

@@ -18,17 +18,12 @@ export default class UserDialog extends Component{
   }
 
   changeFormData(key,e){
-    // let stateCopy = JSON.parse(JSON.stringify(this.props.user))
-    // console.log(key)
-    // console.dir(this.props.user);
     this.props.userInfo[key] = e.target.value
     this.setState(this.props.userInfo)
-    console.dir(this.props.userInfo)
   }  
   signUp(e){
     e.preventDefault()
     let {username,password,email} = this.props.userInfo
-    console.log(username,password,email);
     let success = (data) =>{
       this.props.onSignUp.call(null,username,password,email,data)
     }
@@ -61,7 +56,6 @@ export default class UserDialog extends Component{
   signIn(e){
     e.preventDefault()
     let {username,password} = this.props.userInfo
-    console.dir(this.props.userInfo);
     let success = (data) => {
       this.props.onSignIn.call(null,username,password,data)
     }
@@ -81,6 +75,7 @@ export default class UserDialog extends Component{
   }
   resetPassword(e){
     e.preventDefault()
+
     resetPasswordByEmail(this.state.userInfo.email);
   }
   showFogetPassword(){

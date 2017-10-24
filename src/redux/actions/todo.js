@@ -4,7 +4,7 @@ export const TOGGLE_TODO = 'TOGGLE_TODO'
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const DELETE_TODO = 'DELETE_TODO'
 export const EDIT_TODO = 'EDIT_TODO'
-
+export const CLEAR_ALL = 'CLEAR_ALL'
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',
@@ -28,4 +28,7 @@ export function setVisibilityFilter(filter){
 }
 export function deleteTodo(id){
   return{type: DELETE_TODO,id}
+}
+export function clearAll(){
+  return {type: CLEAR_ALL }
 }

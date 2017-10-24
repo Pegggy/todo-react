@@ -12,7 +12,6 @@ export default class AddTodo extends Component{
       this.setState({
         text: e.target.value
       })
-      console.log(this.state.text)
   }
   handleClick(text,e){
     this.props.onAddClick(text)
@@ -24,6 +23,9 @@ export default class AddTodo extends Component{
     if(e.key === 'Enter'){
       if(e.target.value.trim() !== ''){
         this.props.onAddClick(text)
+        this.setState({
+          text: ''
+        })
       }
     }
   }

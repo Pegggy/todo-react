@@ -34,7 +34,6 @@ export const TodoModel = {
         if(!todo.attributes.deleted) return  {id:todo.id,...todo.attributes}
       });
       arr = arr.filter(todo => todo !== undefined)
-      console.log(arr)
       successFn.call(null,arr)
     }, function (error) {
       errorFn && errorFn.call(null,error)
@@ -46,7 +45,6 @@ export const TodoModel = {
   update({id,text,completed,deleted},successFn,errorFn){
     // 第一个参数是 className，第二个参数是 objectId
     var todo = AV.Object.createWithoutData('Todo', id)
-    console.log(id,completed)
     // 修改属性
     text !== undefined && todo.set('text', text)
     completed !== undefined && todo.set('completed', completed)

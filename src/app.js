@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { initTodo,addTodo,toggleTodo,editTodo,deleteTodo,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
+import { initTodo,addTodo,toggleTodo,editTodo,deleteTodo,clearAll,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
 import {signup,signin,signout,forget_password} from './redux/actions/user'
 // import './App.css'
 import AddTodo from './component/addtodo'
@@ -82,11 +82,11 @@ class App extends Component {
     //   })
     // }
 
-    signOut(){
-      signOut()
-      this.props.userInfo = {}
-      stateCopy.todoList = []
-    }
+    // signOut(){
+    //   signOut()
+    //   this.props.userInfo = {}
+    //   stateCopy.todoList = []
+    // }
 
   render(){
     const { dispatch, visibleTodos, visibilityFilter,userInfo } = this.props
@@ -105,7 +105,7 @@ class App extends Component {
       <div className="App">
          <h1>{this.props.userInfo.username||'我'}的待办
           {this.props.userInfo.data.id ? <button className="signOut" 
-          onClick={this.signOut.bind(this)}>登出</button> : null}
+          onClick={()=>this.props.signout()}>登出</button> : null}
         </h1> 
         <div className="inputWrapper">
           <AddTodo 
@@ -154,11 +154,9 @@ const mapDispatchToProps = (dispatch) => {
       TodoModel.create(todoitem,(id)=>{
         todoitem.id = id
         dispatch(addTodo(todoitem.id,todoitem.text));
-        this.setState(
-          this.props.todoList
+        this.setState(this.props.todoList)}
         ,(error)=>{
           console.log(error)
-        })
       })
     },
     toggleTodo: (todo) =>{ 
@@ -200,6 +198,11 @@ const mapDispatchToProps = (dispatch) => {
       },(error)=>{
         console.log(error)
       })
+    },
+    signout: () =>{
+      signOut()
+      dispatch(signout())
+      dispatch(clearAll())
     }
   }
 }

@@ -1,4 +1,4 @@
-import { INIT_TODO,ADD_TODO, TOGGLE_TODO,DELETE_TODO,EDIT_TODO, SET_VISIBILITY_FILTER,VisibilityFilters } from '../actions/todo';
+import { INIT_TODO,ADD_TODO, TOGGLE_TODO,DELETE_TODO,EDIT_TODO, CLEAR_ALL,SET_VISIBILITY_FILTER,VisibilityFilters } from '../actions/todo';
 import { combineReducers } from 'redux';
 const { SHOW_ALL } = VisibilityFilters;
 
@@ -54,6 +54,9 @@ function todos(state = [], actions){
         { ...todo, text: action.text } :
         todo
     )
+    case CLEAR_ALL:
+      state = []
+      return state;
     default: 
       return state
   }

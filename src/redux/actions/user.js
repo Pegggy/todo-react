@@ -9,8 +9,8 @@ export function signup(username,password,email,data){
 export function signin(username,password,data){
   return{ type: SIGNIN,username,password,data}
 }
-export function signout(user,data){
-  return{ type: SIGNOUT,user,data}
+export function signout(){
+  return{ type: SIGNOUT}
 }
 export function forget_password(email,data){
   return{ type: FORGET_PASSWORD,email,data}
