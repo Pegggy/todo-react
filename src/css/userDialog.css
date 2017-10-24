@@ -23,7 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,.3);
+  background: #fdd7d5;
 }
 .UserDialog{
   border-radius: 4px;

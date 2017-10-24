@@ -75,10 +75,10 @@ class App extends Component {
     const { dispatch, visibleTodos, visibilityFilter,userInfo } = this.props
     return (
       <div className="App">
-         <h1>{this.props.userInfo.username||'我'}的待办
-          {this.props.userInfo.data.id ? <button className="signOut" 
-          onClick={()=>this.props.signout()}>登出</button> : null}
-        </h1> 
+        {this.props.userInfo.data.id === undefined ? null: 
+        <h1>{this.props.userInfo.data.username}的待办
+          <button className="signOut" onClick={()=>this.props.signout()}>登出</button>
+        </h1> }
         <div className="inputWrapper">
           <AddTodo 
           onAddClick={(text) => {this.props.addTodo(text)}}/>
@@ -86,11 +86,11 @@ class App extends Component {
          <TodoList className="todolist"  todos={this.props.todoList} 
           onTodoClick={(todo) => {this.props.toggleTodo(todo)}}
           onTodoDeleted={(todo) =>{this.props.deleteTodo(todo)}}/>
-       { this.props.userInfo.data.id ? null :  
+       { this.props.userInfo.data.id === undefined ?  
        <UserDialog onSignUp={(username,password,email,user)=>this.props.signup(username,password,email,user)} 
        onSignIn={(username,password,user)=>this.props.signin(username,password,user)}
        userInfo={this.props.userInfo}
-       onResetPassword={(email)=>{this.props.forget_password(email)}}/>}
+       onResetPassword={(email)=>{this.props.forget_password(email)}}/> : null}
        {/* <SideBar /> } */}
       </div>
       

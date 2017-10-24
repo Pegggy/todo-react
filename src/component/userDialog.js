@@ -16,7 +16,6 @@ export default class UserDialog extends Component{
       }
     }
   }
-
   changeFormData(key,e){
     this.props.userInfo[key] = e.target.value
     this.setState(this.props.userInfo)
@@ -48,9 +47,9 @@ export default class UserDialog extends Component{
         this.state.info[type] = ''
         this.setState(this.state)
     }
-     if(checkUserName(username,hideInfo,showInfo) && checkPassword(password,hideInfo,showInfo) && checkEmail(email,hideInfo,showInfo)){
-       signUp(username,password,email,success,error)
-     }  
+    if(checkUserName(username,hideInfo,showInfo) && checkPassword(password,hideInfo,showInfo) && checkEmail(email,hideInfo,showInfo)){
+      signUp(username,password,email,success,error)
+    }
   }
   signIn(e){
     e.preventDefault()
@@ -74,8 +73,10 @@ export default class UserDialog extends Component{
   }
   resetPassword(e){
     e.preventDefault()
-    this.props.onResetPassword.call(null,this.props.userInfo.email)
-    this.returnToSignIn();
+    if(checkEmail(this.props.userInfo.email)){
+      this.props.onResetPassword.call(null,this.props.userInfo.email)
+      this.returnToSignIn()
+    }
   }
   showFogetPassword(){
     let stateCopy = JSON.parse(JSON.stringify(this.state))
@@ -85,7 +86,6 @@ export default class UserDialog extends Component{
   returnToSignIn(){
     let stateCopy = JSON.parse(JSON.stringify(this.state))
     stateCopy.selectedTab = "signUpOrSignIn"
-    // stateCopy.formData.email = ''
     this.setState(stateCopy)
   }
   render(){
@@ -150,6 +150,11 @@ function checkPassword(password,successFn,errorFn){
 }
 function checkEmail(email,successFn,errorFn){
   var info = ''
+  let fn = (msg) =>{
+    console.log(msg)
+  }
+  successFn = successFn || fn
+  errorFn = errorFn || fn
   var reg = /^[a-zA-Z0-9_]+@\w+\.[a-zA-Z0-9]+$/g;
   if(reg.test(email)){
     successFn('email')
