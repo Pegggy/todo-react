@@ -38,19 +38,9 @@ export default class AddTodo extends Component{
               value={text} 
               onChange={this.handleChange.bind(this)} 
               onKeyPress={this.submit.bind(this,text)}/>
-      <button onClick={this.handleClick.bind(this,text)}>Add</button>
+      <button class="btn addBtn"onClick={this.handleClick.bind(this,text)}>Add</button>
       </div>
     )
   }
 
 }
-// function changTitle(props,e){
-//   props.onChange(e);
-// }
-// function submit(props,e){
-//   if(e.key === 'Enter'){
-//     if(e.target.value.trim() !== ''){
-//       props.onSubmit(e)
-//     }
-//   }
-// }

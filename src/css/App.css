@@ -10,7 +10,8 @@ input[type="checkbox"],button,input[type="radio"],input[type="text"],input[type=
 }
 .App{
   position: relative;
-  
+  margin: 0 auto;
+  width: 600px;
 }
 .App .inputWrapper{
   width: 400px;
@@ -19,17 +20,18 @@ input[type="checkbox"],button,input[type="radio"],input[type="text"],input[type=
   font-size: 1.2em;
   border-bottom: 1px solid #ededed;
 }
-.App .signOut{
+.btn{
   border: none;
   font-size: 20px;
-  position: absolute;
-  top: 20px;
-  right: 0;
-  background: #f59f9b;
+    background: #f59f9b;
   color: #fff;
   padding: 8px 10px;
   box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.19);
 }
+.App .signOut{
+  margin-left: 20px;
+}
+
 .App h1{
   color: #5bddc5;
   font-weight: 300;

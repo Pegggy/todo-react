@@ -1,3 +1,6 @@
+import 'normalize.css'
+import './css/reset.css'
+import './css/App.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { initTodo,addTodo,toggleTodo,editTodo,deleteTodo,clearAll,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
@@ -6,9 +9,6 @@ import AddTodo from './component/addtodo'
 import TodoList from './component/todolist'
 import UserDialog from './component/userDialog'
 import {getCurrentUser,signOut,TodoModel,resetPasswordByEmail} from './component/leanCloud'
-import 'normalize.css'
-import './css/reset.css'
-import './css/App.css'
 // import SideBar from './sidebar'
 
 class App extends Component {
@@ -77,7 +77,7 @@ class App extends Component {
       <div className="App">
         {this.props.userInfo.data.id === undefined ? null: 
         <h1>{this.props.userInfo.data.username}的待办
-          <button className="signOut" onClick={()=>this.props.signout()}>登出</button>
+          <button className="btn signOut" onClick={()=>this.props.signout()}>登出</button>
         </h1> }
         <div className="inputWrapper">
           <AddTodo 
