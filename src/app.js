@@ -115,7 +115,7 @@ class App extends Component {
           onTodoClick={(todo) => {this.props.toggleTodo(todo)}}
           onTodoDeleted={(todo) =>{this.props.deleteTodo(todo)}}/>
        { this.props.userInfo.data.id ? null :  
-       <UserDialog onSignUp={(user)=>this.props.signup(user)} 
+       <UserDialog onSignUp={(username,password,email,user)=>this.props.signup(username,password,email,user)} 
        onSignIn={(username,password,user)=>this.props.signin(username,password,user)}
        userInfo={this.props.userInfo}/>}
        {/* <SideBar /> } */}
@@ -179,15 +179,18 @@ const mapDispatchToProps = (dispatch) => {
       },(error)=>{
         console.log(error)
       })
-      // console.log(id);
-      // dispatch(deleteTodo(todo.id));
     },
     setVisibilityFilter: (filter) =>{
       dispatch(setVisibilityFilter(filter))
     },
-    signup: (data) =>{
-      console.log(data);
-      dispatch(signup(data))
+    signup: (username,password,email,data) =>{
+      dispatch(signup(username,password,email,data))
+      TodoModel.getByUser(data,(todos)=>{
+        dispatch(initTodo(todos))
+        this.setState(this.props.todoList)
+      },(error)=>{
+        console.log(error)
+      })
     },
     signin: (username,password,user) =>{
       dispatch(signin(username,password,user))

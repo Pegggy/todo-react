@@ -30,7 +30,7 @@ export default class UserDialog extends Component{
     let {username,password,email} = this.props.userInfo
     console.log(username,password,email);
     let success = (data) =>{
-      this.props.onSignUp.call(null,data)
+      this.props.onSignUp.call(null,username,password,email,data)
     }
     let error = (error) =>{
       switch(error.code){
