@@ -1,12 +1,6 @@
-
 input[type="checkbox"],button,input[type="radio"],input[type="text"],input[type="password"]{
   outline: none;
   -webkit-appearance: none;
-}
-@media screen and (min-width: 300px) and (max-width: 450px){
-  .App{
-    min-width: 18em;
-  }
 }
 .App{
   position: relative;
@@ -36,4 +30,14 @@ input[type="checkbox"],button,input[type="radio"],input[type="text"],input[type=
   color: #5bddc5;
   font-weight: 300;
   text-align: center;
+}
+@media screen and (min-width: 300px) and (max-width: 450px){
+  .App{
+    max-width: 15em;
+    position: relative;
+    margin: 0 auto;
+  }
+  .App .inputWrapper{
+    max-width: 15em;
+  }
 }
