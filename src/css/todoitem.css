@@ -1,7 +1,6 @@
 .todo-item{
   position: relative;
   background: #fff;
-  width: 400px;
 }
 .todo-item> .toggle{
   width: 40px;

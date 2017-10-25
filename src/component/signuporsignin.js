@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import SignInForm from './signinform'
 import SignUpForm from './signupform'
-import '../css/signuporsignin.css'
+
 export default class SignUpOrSignIn extends Component{
   constructor(props){
     super(props)

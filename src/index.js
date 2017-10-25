@@ -6,6 +6,7 @@ import App from './app'
 import store from './redux/store'
 
 
+
 renderWithHotReload()
 if (module.hot) {
   module.hot.accept('./app', () => { renderWithHotReload() })

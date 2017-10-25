@@ -38,7 +38,7 @@ export default class AddTodo extends Component{
               value={text} 
               onChange={this.handleChange.bind(this)} 
               onKeyPress={this.submit.bind(this,text)}/>
-      <button class="btn addBtn"onClick={this.handleClick.bind(this,text)}>Add</button>
+      <button className="btn addBtn"onClick={this.handleClick.bind(this,text)}>Add</button>
       </div>
     )
   }

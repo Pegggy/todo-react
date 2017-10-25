@@ -5,10 +5,13 @@ input[type="checkbox"],button,input[type="radio"],input[type="text"],input[type=
 .App{
   position: relative;
   margin: 0 auto;
-  width: 600px;
+  max-width: 900px;
 }
 .App .inputWrapper{
-  width: 400px;
+  margin-left: 300px;
+}
+.todolist{
+  margin-left: 300px; 
 }
 .App > .todolist > li{
   font-size: 1.2em;
@@ -31,13 +34,32 @@ input[type="checkbox"],button,input[type="radio"],input[type="text"],input[type=
   font-weight: 300;
   text-align: center;
 }
-@media screen and (min-width: 300px) and (max-width: 450px){
+.calendar{
+  position: absolute;
+  top: 80px;
+  left: 20px;
+}
+@media screen and (max-width: 450px){
   .App{
-    max-width: 15em;
     position: relative;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
   }
-  .App .inputWrapper{
-    max-width: 15em;
+  .App .inputWrapper,.todolist{
+    margin: 0 auto 20px;
+
+  }
+  .todoInput{
+    width: ;
+  }
+  .todo-item{
+    width: 265px;
+  }
+  .calendar{
+    position: relative;
+    margin: 10px auto 20px;
+    top: 0;
+    left: 0;
   }
 }

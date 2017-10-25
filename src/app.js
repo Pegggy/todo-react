@@ -1,15 +1,17 @@
 import 'normalize.css'
 import './css/reset.css'
+import 'rc-calendar/assets/index.css'
 import './css/App.css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { initTodo,addTodo,toggleTodo,editTodo,deleteTodo,clearAll,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
+import { initTodo,addTodo,toggleTodo,deleteTodo,clearAll,setVisibilityFilter,VisibilityFilters } from './redux/actions/todo'
 import {signup,signin,signout,forget_password} from './redux/actions/user'
 import AddTodo from './component/addtodo'
 import TodoList from './component/todolist'
 import UserDialog from './component/userDialog'
 import {getCurrentUser,signOut,TodoModel,resetPasswordByEmail} from './component/leanCloud'
-// import SideBar from './sidebar'
+import Calendar from 'rc-calendar';
+
 
 class App extends Component {
 
@@ -79,19 +81,25 @@ class App extends Component {
         <h1>{this.props.userInfo.data.username}的待办
           <button className="btn signOut" onClick={()=>this.props.signout()}>登出</button>
         </h1> }
+        <div className="calendar">
+          <Calendar />
+        </div>
         <div className="inputWrapper">
           <AddTodo 
           onAddClick={(text) => {this.props.addTodo(text)}}/>
-        </div>  
-         <TodoList className="todolist"  todos={this.props.todoList} 
+        </div>
+        <div className="todolist">
+          <TodoList  todos={this.props.todoList} 
           onTodoClick={(todo) => {this.props.toggleTodo(todo)}}
           onTodoDeleted={(todo) =>{this.props.deleteTodo(todo)}}/>
+        </div>  
+
        { this.props.userInfo.data.id === undefined ?  
        <UserDialog onSignUp={(username,password,email,user)=>this.props.signup(username,password,email,user)} 
        onSignIn={(username,password,user)=>this.props.signin(username,password,user)}
        userInfo={this.props.userInfo}
        onResetPassword={(email)=>{this.props.forget_password(email)}}/> : null}
-       {/* <SideBar /> } */}
+        
       </div>
       
     )
@@ -139,9 +147,6 @@ const mapDispatchToProps = (dispatch) => {
       },(error)=>{
         this.setState(this.props.todoList)
       })
-    },
-    editTodo: (id,text)=>{
-      dispatch(editTodo(id,text))
     },
     deleteTodo: (todo)=>{
       TodoModel.destroy(todo.id,()=>{
