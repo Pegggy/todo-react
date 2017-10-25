@@ -8,6 +8,7 @@ module.exports = {
   entry: [
     'react-hot-loader/patch',
     path.join(__dirname,'src/index.js'),
+
   ],
   /**
    * 输出到 dist 文件夹，输出名字为 bundle.js
@@ -48,7 +49,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.join(__dirname,'src/index.html')
-  })
+    })
   ],
   devServer:{
     contentBase: path.join(__dirname,'./dist'),

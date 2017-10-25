@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "./node_modules/.bin/webpack-dev-server --config webpack.dev.config.js --color --progress --hot",
-    "build": "./node_modules/.bin/webpack --config webpack.dev.config.js",
+    "build": "./node_modules/.bin/webpack --config webpack.dev.config.js -p",
     "webpack": "./node_modules/.bin/webpack"
   },
   "repository": {
@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Pegggy/todo-react/issues"
   },
-  "homepage": "https://github.com/Pegggy/todo-react#readme",
+  "homepage": "https://pegggy/github.com/todo-react/dist",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
