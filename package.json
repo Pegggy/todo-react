@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Pegggy/todo-react/issues"
   },
-  "homepage": "https://pegggy/github.com/todo-react/dist",
+  "homepage": "https://pegggy.github.io/todo-react/dist",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
