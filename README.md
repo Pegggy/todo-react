@@ -17,3 +17,26 @@
 React + Redux + ES6 + Webpack 
 
 云端数据部署采用 Leancloud
+
+## 本地运行
+1. 克隆项目到本地
+```
+git clone git@github.com:Pegggy/todo-react.git
+```
+
+2. 安装依赖
+```
+npm install
+```
+
+3. 启动
+```
+npm start
+```
+在浏览器窗口打开 [http://0.0.0.0:8080](http://0.0.0.0:8080)即可使用
+
+4. 其他命令
+```
+## 将 src 文件夹下文件编译到 dist 文件夹下
+npm run build
+```
