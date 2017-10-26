@@ -1,6 +1,6 @@
 ## 待办事项 TodoList
 基于 React、Redux 的待办事项管理应用，支持登录、注册、找回密码以及云同步。
-[点击此处](https://pegggy/github.com/todo-react/dist/index.html)进入应用
+[点击此处](https://pegggy.github.io/todo-react/dist/index.html)进入应用
 
 ## 已完成功能
 
